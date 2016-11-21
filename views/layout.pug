@@ -1,0 +1,49 @@
+//views/layout.pug
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
+        script(src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js')
+
+
+        link(rel='stylesheet', href='https://unpkg.com/leaflet@1.0.1/dist/leaflet.css')
+        script(src='https://unpkg.com/leaflet@1.0.1/dist/leaflet.js')
+        link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
+        
+        link(rel='stylesheet', href='/plugins/mousePosition/mousePosition.css')
+        script(src='/plugins/mousePosition/mousePosition.js')
+        link(rel='stylesheet', href='/plugins/fullScreen/Control.FullScreen.css')
+        script(src='/plugins/fullScreen/Control.FullScreen.js')
+
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js')
+        script(src='/plugins/globeminimap/Control.GlobeMiniMap.js')
+
+        link(rel='stylesheet' href='/plugins/zoomslider/src/L.Control.Zoomslider.css')
+        script(src='/plugins/zoomslider/src/L.Control.Zoomslider.js')
+
+        script(src='/plugins/boxzoom/dist/leaflet-control-boxzoom.js')
+        link(rel='stylesheet', href='/plugins/boxzoom/dist/leaflet-control-boxzoom.css')
+
+        //link(rel='stylesheet', href='/plugins/font-awesome-4.6.3/css/font-awesome.min.css')
+        //link(rel='stylesheet', href='/plugins/BeautifyMarker/css/bootstrap.min.css')
+        //link(rel='stylesheet', href='/plugins/BeautifyMarker/leaflet-beautify-marker-icon.css')
+        //script(src='/plugins/BeautifyMarker/leaflet-beautify-marker.js')
+        //script(src='/plugins/BeautifyMarker/leaflet-beautify-marker-icon.js')
+
+        link(rel='stylesheet', href='/plugins/StyledLayerControl/css/styledLayerControl.css')
+        script(src='/plugins/StyledLayerControl/src/styledLayerControl.js')
+
+       
+
+    body
+                .wrapper
+                .ribbon-wrapper-green
+                .ribbon-green Alpha
+                #wrapper
+                include includes/header
+                block content

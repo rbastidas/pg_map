@@ -1,0 +1,267 @@
+extends layout.pug
+block content
+    #map
+        script(type='text/javascript').
+
+         var myData = !{JSON.stringify(jsonData)};
+         
+
+         var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+         var osmAttrib='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+         var osmUrlCycle='http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
+         var osmCycleAttrib='Map data © OpenCycleMap contributors';
+         var osmUrlCarto='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+         var osmAttribCarto='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a> contributors';
+         var osmUrlOpenTopoMap= 'http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+         var osmAttribOpenTopoMap='Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
+         var osmUrlEsriWorld='http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
+         var osmAttribEsriWorld='Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012';
+         var osmUrlEsri_NatGeo='http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}';
+         var osmAttribEsri_NatGeo= 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC';
+
+         var osmUrlmapboxDark='https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmljYXJkbzE1IiwiYSI6ImNpdHFiY3N0cTAwOTcyenBkNjk3eTJ6YWMifQ.wb0ogcNWP1SrUtI7e0zoAg';
+         var osmAttrmapboxDark = '© Mapbox © OpenStreetMap';
+       
+
+         var openStreetMap = L.tileLayer(osmUrl, {attribution: osmAttrib });
+         var openStreetMapCycle = L.tileLayer(osmUrlCycle, {attribution: osmCycleAttrib });
+         var cartodb = new L.TileLayer(osmUrlCarto, { attribution: osmAttribCarto });
+         var OpenTopoMap = L.tileLayer(osmUrlOpenTopoMap, {attribution: osmAttribOpenTopoMap });
+         var Esri_WorldStreetMap = L.tileLayer(osmUrlEsriWorld, {attribution: osmAttribEsriWorld});
+         var Esri_NatGeoWorldMap = L.tileLayer(osmUrlEsri_NatGeo, {attribution: osmAttribEsri_NatGeo,});
+         var mapboxDark = L.tileLayer(osmUrlmapboxDark, {attribution: osmAttrmapboxDark});
+          
+         //var map = L.map('map', {
+          //scrollWheelZoom: true,
+          //center: [48.85929, 2.34215], //48.85929, 2.34215 - 4.375562, -74.106870
+          //zoom: 12,
+          //boxZoom: true
+         //});
+
+         var map = L.map('map', { });
+
+         //map.addLayer(openStreetMap);        
+         openStreetMap.addTo(map);
+
+
+
+          map.setView([4.375562, -74.106870], 6);
+
+
+         
+
+         var iavhHAicas = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'aicas', format:'image/png', transparent: true});
+
+         var iavhHBST = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'bosque_seco_tropical', format:'image/png', transparent: true});
+
+         var iavhHCP100 = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'complejos_paramos_escala100k', format:'image/png', transparent: true});
+
+         var iavhHECRO = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'ecosistemas_cuenca_rio_orinoco', format:'image/png', transparent: true});
+
+         var iavhHEGE = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'ecosistemas_generales_etter', format:'image/png', transparent: true});
+
+         var iavhHGTH10 = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Historicos/wms', 
+            {layers: 'grado_transformacion_humedales_m10k', format:'image/png', transparent: true});
+
+
+
+         var iavhFHCI2015 = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms', 
+            {layers: 'Humedales_Continentales_Insulares_2015_Vector', format:'image/png', transparent: true});
+
+         var iavhFLP2015 = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms', 
+            {layers: 'Limites21Paramos_25K_2015', format:'image/png', transparent: true});
+
+         var iavhFLP2016 = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms', 
+            {layers: 'Limites24Paramos_25K_2016', format:'image/png', transparent: true});
+
+
+         var iavhPBCob = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_oleoducto_bicentenario/wms', 
+            {layers: 'coberturas_bo_2009_2010', format:'image/png', transparent: true});
+
+         var iavhPPCBio = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'Biomas', format:'image/png', transparent: true});
+
+         var iavhPPCca = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'colapso_acuatico', format:'image/png', transparent: true});
+ 
+         var iavhPPCct = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'colapso_terrestre', format:'image/png', transparent: true});
+
+         var iavhPPCt = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'colapso_total', format:'image/png', transparent: true});
+
+         var iavhPPCdb = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'distritos_biogeograficos', format:'image/png', transparent: true});
+
+         var iavhPPChb = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'hidrobiologia', format:'image/png', transparent: true});
+
+         var iavhPPCln = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'lineamientos', format:'image/png', transparent: true});
+
+         var iavhPPCmc = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'meta_conservacion', format:'image/png', transparent: true});
+
+         var iavhPPCun = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'unicidad', format:'image/png', transparent: true});
+
+         var iavhPPCuna = L.tileLayer.wms('http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms', 
+            {layers: 'unidades_analisis', format:'image/png', transparent: true});
+
+
+
+         var baseMaps = [
+                          { 
+                             groupName : "Mapas Base",
+                             expanded : true,
+                             layers : {
+                                      "Open Street Map": openStreetMap,
+                                      "Open Street Map Cycle": openStreetMapCycle,
+                                      "Open Topo Map": OpenTopoMap,
+                                      "CartoDB":cartodb,
+                                      "Esri World Street Map":Esri_WorldStreetMap,
+                                      "Esri NatGeo World Map":Esri_NatGeoWorldMap,
+                                      "Mapbox Dark": mapboxDark 
+                                       
+                                        }
+                              } 
+                           ];
+
+
+
+         var wmsLayers = [
+                           {
+                             groupName : "WMS Historico",
+                             expanded : false,
+                             layers : {
+                                      "Aicas": iavhHAicas,
+                                      "Bosque Seco Tropical": iavhHBST,
+                                      "Complejos Paramos Escala 100k": iavhHCP100,
+                                      "Ecosistemas Cuenca Rio Orinoco": iavhHECRO,
+                                      "Ecosistemas Generales Etter": iavhHEGE,
+                                      "Grado Transformacion Humedales 10k": iavhHGTH10
+                                      }
+                          }, {
+                             groupName : "WMS Fondo de adaptacion",
+                             expanded : false,
+                             layers : {
+
+                                     "Humedales Continentales e Insulares 2015": iavhFHCI2015,
+                                     "Limite 21 Complejos de Paramo 2015": iavhFLP2015,
+                                     "Limite 24 Complejos de Paramo 2016": iavhFLP2016
+                                      }
+                          }, {
+                             groupName : "WMS Proyecto Oleoducto Bicentenario",
+                             expanded : false,
+                             layers : {
+                                    "Cobertura Bo": iavhPBCob
+                                      }
+                          }, {
+                             groupName : "WMS Conservacion de la Biodiversidad",
+                             expanded : false,
+                             layers : {
+
+                             "Biomas": iavhPPCBio,
+                             "Colapso Acuatico": iavhPPCca,
+                             "Colapso Terrestre": iavhPPCct,
+                             "Colapso Total": iavhPPCt,
+                             "Distritos Biogeograficos": iavhPPCdb,
+                             "Hidrobiologia": iavhPPChb,
+                             "Lineamientos": iavhPPCln,
+                             "Meta Conservacion": iavhPPCmc,
+                             "Unicidad": iavhPPCun,
+                             "Unidades de Analisis": iavhPPCuna,
+                        }
+                    }
+
+                ];
+
+
+            var options2 = {
+            container_width     : "300px",
+            container_maxHeight : "300px", 
+            group_maxHeight     : "80px",
+            exclusive           : true
+           };
+
+          var baseMaps2 = {
+          };
+       
+            var control = L.Control.styledLayerControl(baseMaps, wmsLayers, options2);
+            map.addControl(control);
+
+           
+         
+         var overlays = {
+          };
+         
+        
+
+
+       
+          options = {
+            iconShape: 'circle-dot',
+            borderWidth: 3
+             };
+
+            var geojsonMarkerOptions = {
+            radius: 3,
+            fillColor: "#00ff00",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          };
+
+         var geoJsonLayer= L.geoJson(myData,{ pointToLayer: function (feature, latlng) {
+         return L.circleMarker(latlng, geojsonMarkerOptions);
+         },
+         onEachFeature: function (feature, layer) {
+         layer.bindPopup(feature.properties.f2); } }).addTo(map);
+                   
+        
+             //geoJsonLayer.addTo(map);
+        
+          control.addOverlay( geoJsonLayer, "Registros", {groupName : "Registros CEIBA", expanded : true} );
+
+
+                              
+             //L.marker([4, -74], {
+             //icon: L.BeautifyIcon.icon(options),
+             //draggable: false }).addTo(map).bindPopup("I'm Beautify");
+
+
+          L.control.scale().addTo(map);
+          L.control.mousePosition().addTo(map);
+
+       
+            
+             
+           L.control.fullscreen({
+           position: 'topleft',
+           title: 'Mostrar mapa en pantalla completa',
+           titleCancel: 'Salir de pantalla completa'
+            }).addTo(map);
+
+           var miniMap = new L.Control.GlobeMiniMap({
+           //uncomment to assign colors
+           //land:'#FFFF00',
+           //water:'#3333FF',
+           marker:'#FF0000',
+           topojsonSrc : '/plugins/globeminimap/world.json'
+           }).addTo(map);
+
+           L.Control.boxzoom({ position:'topleft' }).addTo(map);
+           L.Control.measureControl().addTo(map);  
+           map.addControl(new L.Control.Zoomslider());
+
+
+
+
+
+          
